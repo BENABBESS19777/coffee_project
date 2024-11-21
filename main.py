@@ -1,3 +1,5 @@
+from os import waitstatus_to_exitcode
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -30,10 +32,18 @@ resources = {
     "coffee": 100,
 }
 Money = 0
-import random
+water_stock = resources['water']
+milk_stock = resources['milk']
+coffee_stock = resources['coffee']
+
 #ALL FUNCTIONS#
 def add_coins_inserted ():
+    """ Calculate the monetary value of the coins inserted """
     return quarters_numbers * 0.25 + dimes_numbers * 0.1 + nickles_numbers * 0.05 + pennies_numbers * 0.01
+def change_coins_inserted():
+    return monetary_value_inserted - 1.5
+
+
 # print start program
 user_choice = input("What would you like? (Espresso/ Latte/ Cappucino) :")
 print(user_choice)
@@ -47,5 +57,18 @@ elif user_choice == 'Espresso':
     dimes_numbers = int(input("How many dimes? : "))
     nickles_numbers = int( input("How many nickles? : "))
     pennies_numbers = int(input("How many quarters? : "))
-    moneteray_value_inserted = add_coins_inserted()
-    print(moneteray_value_inserted)
+    monetary_value_inserted = add_coins_inserted()
+    if monetary_value_inserted == 1.5 :
+        print("Here is your Espresso ,Enjoy !")
+        water_stock-= 50
+        milk_stock -= 0
+        coffee_stock -= 18
+    elif monetary_value_inserted > 1.5 :
+        print(f"Here is {change_coins_inserted()} in change ")
+        print("Here is your Espresso ,Enjoy !")
+        water_stock -= 50
+        milk_stock -= 0
+        coffee_stock -= 18
+    else:
+        print("Sorry that's not enough money, Money refunded")
+print(water_stock)
